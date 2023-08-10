@@ -36,6 +36,8 @@ dependencies {
 	// implementation	'org.mariadb.jdbc:mariadb-java-client:3.0.8'//DB
 	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 	// runtime시에만 필요, 실행환경에서	제공되는 dependency를 설정
+	implementation 'org.json:json:20230227'
+	// https://mvnrepository.com/artifact/org.json/json
 }
 
 tasks.named('test') {

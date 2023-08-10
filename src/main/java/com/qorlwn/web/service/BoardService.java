@@ -16,4 +16,8 @@ public class BoardService {
 	public List<BoardDTO> boardList() {
 		return boardDAO.boardList();
 	}
+
+	public String detail(int bno) {
+		return boardDAO.detail(bno);
+	}
 }
