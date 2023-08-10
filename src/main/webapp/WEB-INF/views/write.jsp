@@ -18,7 +18,7 @@
 		color: black;
 	}
 	.write-form textarea {
-		z-index: -1;	
+		wid
 	}
 }
 </style>
