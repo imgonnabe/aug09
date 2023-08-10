@@ -45,36 +45,11 @@ $(function(){
 		
 	});
 	
-	/* $(".modalOpen").click(function(){
-		$("#exampleModal").modal("show");
-	}); */
 });
 </script>
 </head>
 <body>
-	<!-- Navigation-->
-	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-		<div class="container">
-			<a class="navbar-brand" href="./"><img
-				src="assets/img/navbar-logo.svg" alt="..." /></a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				Menu <i class="fas fa-bars ms-1"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-					<li class="nav-item"><a class="nav-link" href="./board">게시판</a></li>
-					<li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-					<!-- 내부 id를 찾는다. -->
-					<li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-					<li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-					<li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<%@ include file="menu.jsp" %>
 	<!-- Masthead-->
 	<header class="masthead">
 		<div class="container">
@@ -101,7 +76,7 @@ $(function(){
 				</c:forEach>
 				</tbody>
 			</table>
-			<button type="button" class="btn btn-secondary">글쓰기</button>
+			<button type="button" class="btn btn-secondary" onclick="location.href='./write'">글쓰기</button>
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
 			  모달

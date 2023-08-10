@@ -36,4 +36,9 @@ public class BoardController {
 		
 		return json.toString();
 	}
+	
+	@GetMapping("/write")
+	public String write() {
+		return "write";
+	}
 }
