@@ -1,6 +1,9 @@
 package com.qorlwn.web.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +32,14 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping("/detail")
 	public String detail(@RequestParam("bno") int bno) {
-		String content = boardService.detail(bno);
-		
+		BoardDTO dto = boardService.detail(bno);
 		JSONObject json = new JSONObject();
-		json.put("content", content);
+		//JSONObject e = new JSONObject();
+		json.put("content", dto.getBcontent());
+		json.put("uuid", dto.getBuuid());
+		
+		//json.put("result", e);// {"result":{"content":"[sdfsdf][sdfsdf]"}}
+		System.out.println(json.toString());
 		
 		return json.toString();
 	}
@@ -40,5 +47,24 @@ public class BoardController {
 	@GetMapping("/write")
 	public String write() {
 		return "write";
+	}
+	
+	@PostMapping("/write")
+	public String write(HttpServletRequest request) {
+		// System.out.println(request.getParameter("title"));
+		// System.out.println(request.getParameter("content"));
+		BoardDTO dto = new BoardDTO();
+		dto.setBtitle(request.getParameter("title"));
+		dto.setBcontent(request.getParameter("content"));
+		dto.setM_id("pororo");
+		dto.setBip("0.0.0.0");
+		int result = boardService.write(dto);
+		return "redirect:/board";
+	}
+	
+	@PostMapping("/delete")
+	public String delete(@RequestParam Map<String,Object> map) {
+		System.out.println(map);
+		return "redirect:/board";
 	}
 }

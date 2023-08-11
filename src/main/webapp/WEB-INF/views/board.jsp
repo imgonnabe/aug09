@@ -11,12 +11,29 @@
 <script src="./js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
+	$(document).on("click", ".del", function(){
+		let bno = $(".bno").val();
+		let uuid = $(".uuid").val();
+		alert(uuid);
+		// 가상 form 만들어서 전송
+		let form = $('<form></form>');
+		form.attr('action', './delete');
+		form.attr('method', 'post');
+		
+		form.append($("<input>", {type:'hidden', name:'bno', value:bno}));/* json */
+		form.append($("<input>", {type:'hidden', name:'uuid', value:uuid}));
+		
+		form.appendTo("body");
+		
+		form.submit();
+	});
+	
 	$(".detail").click(function(){
 		let bno = $(this).children("td").eq(0).html();
 		let title = $(this).children("td").eq(1).text();
 		let name = $(this).children("td").eq(2).html();
 		let date = $(this).children("td").eq(3).html();
-		let read = $(this).children("td").eq(4).html();
+		let read = Number($(this).children("td").eq(4).html());
 		let comment = $(this).children("td").eq(1).children(".bg-secondary").text().length;
 		
 		if(comment > 0){
@@ -26,12 +43,16 @@ $(function(){
 		$.ajax({
 			url : "./detail",
 			type : "post",
-			data : {"bno" : bno},
+			data : {bno : bno},
 			dataType : "json",
 			success:function(data){
 				// alert(data.content);
 				$(".modal-title").text(title);
-				$(".detail-name").text(name);
+				name += '<img src="./img/update2.png"><img src="./img/delete2.png" class="del">';
+				name += '<input type="hidden" class="bno" value="'+bno+'">';
+				name += '<input type="hidden" class="uuid" value="'+data.uuid+'">';
+				
+				$(".detail-name").html(name);
 				$(".detail-date").text(date);
 				$(".detail-read").text(read);
 				$(".detail-content").html(data.content);
@@ -41,7 +62,6 @@ $(function(){
 				alert("에러");
 			}
 		});
-		
 		
 	});
 	
