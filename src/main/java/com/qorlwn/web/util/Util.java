@@ -34,8 +34,8 @@ public class Util {
 	}
 
 	public String exchange(String str) {
-		str = str.replaceAll("<", "&lt;");// 수정해주세요 제발
-		str = str.replaceAll(">", "&gt;");// 수정해주세요 제발
+		str = str.replaceAll("<", "&lt;");
+		str = str.replaceAll(">", "&gt;");
 		return str;
 	}
 
