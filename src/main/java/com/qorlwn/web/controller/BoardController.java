@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,10 @@ public class BoardController {
 		//JSONObject e = new JSONObject();
 		json.put("content", dto.getBcontent());
 		json.put("uuid", dto.getBuuid());
+		json.put("ip", dto.getBip());
 		
 		//json.put("result", e);// {"result":{"content":"[sdfsdf][sdfsdf]"}}
-		System.out.println(json.toString());
-		
+		// System.out.println(json.toString());
 		return json.toString();
 	}
 	
@@ -50,13 +51,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String write(HttpServletRequest request) {
+	public String write(HttpServletRequest request, HttpSession session) {
 		// System.out.println(request.getParameter("title"));
 		// System.out.println(request.getParameter("content"));
 		BoardDTO dto = new BoardDTO();
 		dto.setBtitle(request.getParameter("title"));
 		dto.setBcontent(request.getParameter("content"));
-		dto.setM_id("pororo");
+		dto.setM_id(String.valueOf(session.getAttribute("m_id")));
 		dto.setBip("0.0.0.0");
 		int result = boardService.write(dto);
 		return "redirect:/board";

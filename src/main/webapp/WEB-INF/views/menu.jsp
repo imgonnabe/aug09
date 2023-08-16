@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
 		<div class="container">
@@ -18,8 +19,25 @@
 					<!-- 내부 id를 찾는다. -->
 					<li class="nav-item"><a class="nav-link" href="./notice">notice</a></li>
 					<li class="nav-item"><a class="nav-link" href="./about">about</a></li>
-					<li class="nav-item"><a class="nav-link" href="./login.qorlwn">login</a></li>
+					
+					<c:choose>
+						<c:when test="${sessionScope.m_id ne null }">
+							<li class="nav-item"><a class="nav-link" href="./myInfo@${sessionScope.m_id }">myInfo</a></li>
+							<li class="nav-item"><a class="nav-link" onclick="logout()">logout</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="nav-item"><a class="nav-link" href="./login">login</a></li>
+						</c:otherwise>
+					</c:choose>
+					
 				</ul>
 			</div>
 		</div>
 	</nav>
+	<script>
+		function logout(){
+			if(confirm("로그아웃하시겠습니까?")){
+				location.href="./logout";
+			}
+		}
+	</script>

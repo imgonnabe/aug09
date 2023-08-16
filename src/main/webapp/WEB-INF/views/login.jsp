@@ -35,20 +35,19 @@
 			if (flag == true) {
 				// 가상 form 만들기
 				let form = document.createElement("form");
-				form.setAttribute("action", "./login.qorlwn");
+				form.setAttribute("action", "./login");
 				form.setAttribute("method", "post");
 				
 				let idField = document.createElement("input");
 				idField.setAttribute("type", "hidden");
 				idField.setAttribute("name", "id");
 				idField.setAttribute("value", id.value);
+				form.appendChild(idField);
 				
 				let pwField = document.createElement("input");
 				pwField.setAttribute("type", "hidden");
 				pwField.setAttribute("name", "pw");
 				pwField.setAttribute("value", pw.value);
-				
-				form.appendChild(idField);
 				form.appendChild(pwField);
 				
 				document.body.appendChild(form);
