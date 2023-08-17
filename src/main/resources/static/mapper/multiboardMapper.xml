@@ -4,7 +4,23 @@
 	
 	<select id="list" parameterType="Integer" resultType="Map">
 		SELECT mbno, mbtitle, m_name, mbcontent, mbdate, mbread
-		FROM mbboardview LIMIT 0, 10
+		FROM mbboardview where mbboard=#{board} LIMIT 0, 10
+	</select>
+	
+	<insert id="mbWrite" parameterType="Map">
+	
+		insert into multiboard (mbtitle, mbcontent, mbboard, m_no)
+		values (#{title}, #{content}, #{board}, (select m_no from members where m_id=#{m_id}))
+		
+		<selectKey resultType="Integer" keyProperty="mbno" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	<!-- select last_insert_id() : 테이블의 auto_increment로 증가된 컬럼값을 가져오는 쿼리 -->
+	
+	<select id="mbdetail" parameterType="Integer" resultType="Map">
+		select mbno, mbtitle, m_name, mbcontent, mbdate, mbread
+		from mbboardview where mbno=#{mbno}
 	</select>
 
 </mapper>

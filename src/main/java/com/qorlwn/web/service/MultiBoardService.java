@@ -17,4 +17,12 @@ public class MultiBoardService {
 	public List<Map<String, Object>> list(int board) {
 		return mbDAO.list(board);
 	}
+
+	public void mbWrite(Map<String, Object> map) {
+		mbDAO.mbWrite(map);
+	}
+
+	public Map<String, Object> mbdetail(int mbno) {
+		return mbDAO.mbdetail(mbno);
+	}
 }

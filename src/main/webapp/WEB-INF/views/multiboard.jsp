@@ -36,7 +36,7 @@ $(function(){
 						</thead>
 						<tbody>
 						<c:forEach items="${list }" var="row">
-							<tr class="row detail">
+							<tr class="row detail" onclick="location.href='./mbdetail?mbno='${row.mbno }">
 								<td class="col-1">${row.mbno }</td>
 								<td class="col-6 title">${row.mbtitle }<c:if test="${row.commentcount ne 0 }">&nbsp;<span class="badge bg-secondary">${row.commentcount }</span></c:if></td>
 								<td class="col-2">${row.m_name }</td>
@@ -51,7 +51,9 @@ $(function(){
 					<h1>게시판에 글이 없습니다.</h1>
 				</c:otherwise>
 			</c:choose>
-			<button type="button" class="btn btn-secondary" onclick="location.href='./write'">글쓰기</button>
+			<c:if test="${sessionScope.m_id ne null }">
+				<button type="button" class="btn btn-secondary" onclick="location.href='./mbwrite?board=${param.board}'">글쓰기</button>
+			</c:if>
 		</div>
 	</header>
 	
