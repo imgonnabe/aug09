@@ -4,7 +4,7 @@
 
 	<select id="login" parameterType="Map" resultType="Map">
 		select count(*) as count, m_name from members
-		where m_id=#{id} and m_pw=#{pw} 
+		where m_id=#{id} and AES_DECRYPT(unhex(m_pw),'bae')=#{pw}
 	</select>
 
 </mapper>
