@@ -40,8 +40,8 @@ public class BoardController {
 		json.put("uuid", dto.getBuuid());
 		json.put("ip", dto.getBip());
 		
-		//json.put("result", e);// {"result":{"content":"[sdfsdf][sdfsdf]"}}
-		// System.out.println(json.toString());
+		//json.put("result", e);
+		// System.out.println(json.toString());// {"result":{"content":"[sdfsdf][sdfsdf]"}}
 		return json.toString();
 	}
 	

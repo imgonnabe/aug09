@@ -101,6 +101,9 @@ $(function(){
 			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
 			  모달
 			</button>
+			<!-- 부트스트랩에서 사용, data-toggle 옵션은 항상 필요하며
+			<a>태그의 경우에만 data-target 대신 href 를 사용할 수 있다. href="#myModal"
+			만약 배경을 클릭해도 모달이 닫히지 않게 하려면 data-backdrop="static" 같은 옵션을 이 때 써도 된다. -->
 			<button type="button" class="modalOpen btn btn-light">모달열기</button>
 		</div>
 	</header>
