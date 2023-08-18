@@ -83,4 +83,9 @@ public class Util {
 		}
 	}
 	
+	// Object > Integer
+	public int objToInt(Object obj) {
+		return Integer.parseInt(String.valueOf(obj));
+	}
+	
 }

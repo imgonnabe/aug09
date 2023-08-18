@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +56,7 @@ public class LoginController {
 	}
 	
 	@GetMapping("/myInfo@{id}")// menu.jsp > href="./myInfo@${sessionScope.m_id }"
-	public ModelAndView myInfo(@PathVariable("id") String id, HttpSession session) {// @GetMapping("/myinfo@{id}") 여기 id값을 @PathVariable("id")가 잡는다.
+	public ModelAndView myInfo(@PathVariable(value = "id", required = false) String id, HttpSession session) {// @GetMapping("/myinfo@{id}") 여기 id값을 @PathVariable("id")가 잡는다.
 		System.out.println("jsp가 보내준 값 : " + id);
 		System.out.println(id.equals(session.getAttribute("mid")));// String은 .equals
 		
