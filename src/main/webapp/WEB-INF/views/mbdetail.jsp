@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,48 +9,76 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
 <script src="./js/jquery-3.7.0.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	
-});
-</script>
+<style type="text/css">
+#main{
+	margin: 0 auto;
+	width:95%;
+	margin-top: 60px;
+	color: black;
+}
+#detail{
+	background-color: white;
+	margin: 0 auto;
+	width: 90%;
+	height: auto;
+	margin-top: 15px;
+	color: black;
+	padding: 10px;
+	box-sizing: border-box;
+}
+#detailH{
+	height: 40px;
+	line-height: 40px;
+	font-size: x-large;
+	border-bottom: 1px solid black;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+#detailIdDate{
+	height: 50px;
+	line-height: 30px;
+	background-color: #D3D3D3;
+	border-bottom: 1px gray solid;
+	padding:10px;
+	box-sizing: border-box;
+}
+#detailID, #detailDate{
+	width: 45%;
+	float: left;
+	text-align: left;
+}
+#detailDate{
+	float: right;
+	text-align: right;
+}
+#detailContent{
+	padding:10px;
+	min-height:300px;
+	height: auto;
+	border-bottom: 1px solid white;
+	box-sizing: border-box;
+	text-align: left;
+}
+</style>
 </head>
 <body>
-	<%@ include file="menu.jsp" %>
+	<%@ include file="menu.jsp"%>
 	<!-- Masthead-->
 	<header class="masthead">
 		<div class="container">
-			<h1>게시판</h1>
-			<button type="button" class="btn btn-secondary" onclick="location.href='./write'">글쓰기</button>
-			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-			  모달
-			</button>
-			<button type="button" class="modalOpen btn btn-light">모달열기</button>
+			<div id="detail">
+				<div id="detailH"><%-- ${detail.mb_no } --%>${detail.mbtitle }</div>
+				<div id="detailN_no" style="height: 0px; visibility: hidden;">${detail.mbno }</div>
+				<div id="detailIdDate">
+					<div id="detailID">${detail.m_name }</div>
+					<div id="detailDate">${detail.mbdate }</div>
+				</div>
+				<div id="detailContent">${detail.mbcontent }</div>
+			<button class="btn btn-primary xi-view-list" onclick="location.href='./multiboard'">멀티보드로</button>
+			</div>
 		</div>
 	</header>
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	<div class="detail">
-				<div class="detail-name">이름</div> 
-				<div class="detail-date-read">    		
-					<div class="detail-date">날짜</div>     		
-					<div class="detail-read">조회수</div>	      		
-				</div>      		
-				<div class="detail-content">본문내용</div>	
-	      	</div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	
+
 	<!-- 다 로딩된 후에 js 띄운다 -->
 	<!-- Bootstrap core JS-->
 	<script
