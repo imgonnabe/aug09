@@ -23,8 +23,13 @@ public class AdminController {
 
 	@Autowired
 	private Util util;
+	
+	@GetMapping("/")
+	public String adminIndex2() {
+		return "forward:/admin/admin";// url경로명을 유지하고 화면내용만 갱신
+	}
 
-	@GetMapping(value = { "/", "/admin" })
+	@GetMapping("/admin")
 	public String adminIndex() {
 		return "admin/index";
 	}
@@ -41,10 +46,15 @@ public class AdminController {
 			session.setAttribute("m_name", result.get("m_name"));
 			session.setAttribute("m_grade", result.get("m_grade"));
 			// 메인으로 이동
-			return "redirect:/admin/admin";
+			return "redirect:/admin/main";
 		} else {
 			return "redirect:/admin/admin?error=login";
 		}
+	}
+	
+	@GetMapping("/main")
+	public String main() {
+		return "admin/main";
 	}
 
 }
