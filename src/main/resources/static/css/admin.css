@@ -76,25 +76,25 @@ h1 {
 .box {
 	width: 100px;
 	height: 100px;
-	margin: 100px;
-	padding: 10px;
+	margin: 200px;
 	text-align: center;
 	line-height: 100px;
 	border-radius: 50%;
 	overflow: hidden;
 	border: 0px;
+	float: left;
 	background-color: #e1cee4;
 }
 
 .box:hover {
 	font-weight: bolder;
 	font-size: larger;
-	margin: 0;
 	height: 200px;
 	width: 200px;
+	margin: 80px;
 	line-height: 100px;
 	transition: 0.4s;
-	border-radius: 50%;
+	border-radius: 30%;
 }
 
 #comment {
