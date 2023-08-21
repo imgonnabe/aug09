@@ -6,5 +6,17 @@
 		select count(*) as count, m_name, m_grade from members
 		where m_id=#{id} and AES_DECRYPT(unhex(m_pw),'bae')=#{pw}
 	</select>
+	
+	<select id="notice" resultType="Map">
+		select nno, ntitle, ncontent, ndate, m_no, m_id, ndel, norifile, nrealfile
+		from notice
+	</select>
+	
+	<insert id="noticeWrite" parameterType="Map">
+		insert into notice (ntitle, ncontent, m_no
+			<if test="file != null and file != ''">, norifile</if>)
+		values (#{title}, #{content}, #{m_no}
+			<if test="file != null and file != ''">, #{file}</if>)
+	</insert>
 
 </mapper>
