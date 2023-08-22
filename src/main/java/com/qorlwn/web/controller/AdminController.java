@@ -1,8 +1,12 @@
 package com.qorlwn.web.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +79,8 @@ public class AdminController {
 	
 	@PostMapping("/noticeWrite")
 	public String noticeWrite(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map) {
+		System.out.println(file);// org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@69c2f465
+		System.out.println(map);// {title=ㅛ, content=ㅛ}, file은 없음
 		if (file.getSize() > 0) {// !file.isEmpty()
 			// 저장할 경로 뽑기
 			HttpServletRequest request = 
@@ -86,14 +93,44 @@ public class AdminController {
 			System.out.println(file.getOriginalFilename());// robot.png
 			System.out.println(file.getSize());// 17719
 			System.out.println(file.getContentType());// image/png
-			// 파일 업로드(경로 + 저장할 파일명)
-			File newFileName = new File(file.getOriginalFilename());
+			
+			// 경로 + 저장할 파일명
+			// File filePath = new File(path);// String 타입의 경로를 file 형태로 바꾼다.
+			// File newFileName = new File(filePath + "/" + file.getOriginalFilename());// "/" == "\\"
+			
+			// 중복피하기 위해 파일명+날짜+ID.파일확장자
+			//                 UUID+파일명.파일확장자
+			// UUID 뽑기
+			UUID uuid = UUID.randomUUID();
+			
+			// 날짜 뽑기
+			LocalDateTime ldt = LocalDateTime.now();
+			String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));// -, _ 빼야된다.
+			String realFileName = format + uuid.toString() + file.getOriginalFilename();
+			
+			File newFileName = new File(path, realFileName);
+			
+			// 파일 업로드
+			// 1. transfer
+			// try {
+			// 	file.transferTo(newFileName);// 파일을 내 서버로 복사
+			// } catch (Exception e) {
+			// 	e.printStackTrace();
+			// }
+			
+			// 2. FileCopyUtils을 사용하기 위해서는 오리지널 파일을 byte[]로 만들어야 한다.
+			try {
+				FileCopyUtils.copy(file.getBytes(), newFileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			map.put("norifile", file.getOriginalFilename());
+			map.put("nrealfile", realFileName);
 		}
 		
-		
 		map.put("m_no", 8);
-		
-		// adminService.noticeWrite(map);
+		System.out.println(map);
+		adminService.noticeWrite(map);
 		return "redirect:/admin/notice";
 	}
 

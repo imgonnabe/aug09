@@ -3,8 +3,11 @@
 <mapper namespace="com.qorlwn.web.dao.AdminDAO">
 	
 	<select id="login" parameterType="Map" resultType="Map">
-		select count(*) as count, m_name, m_grade from members
-		where m_id=#{id} and AES_DECRYPT(unhex(m_pw),'bae')=#{pw}
+		<![CDATA[
+			select count(*) as count, m_name, m_grade from members
+			where m_id=#{id} and AES_DECRYPT(unhex(m_pw),'bae')=#{pw}
+			and m_grade > 5
+		]]>
 	</select>
 	
 	<select id="notice" resultType="Map">
@@ -14,9 +17,9 @@
 	
 	<insert id="noticeWrite" parameterType="Map">
 		insert into notice (ntitle, ncontent, m_no
-			<if test="file != null and file != ''">, norifile</if>)
+			<if test="norifile != null and norifile != ''">, norifile, nrealfile</if>)
 		values (#{title}, #{content}, #{m_no}
-			<if test="file != null and file != ''">, #{file}</if>)
+			<if test="norifile != null and norifile != ''">, #{norifile}, #{nrealfile}</if>)
 	</insert>
 
 </mapper>

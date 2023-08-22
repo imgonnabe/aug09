@@ -11,11 +11,11 @@ body {
 }
 
 .menu {
-	position: absolute;
+	position: fixed;
 	margin: 0;
 	padding: 0;
 	width: 50px;
-	height: 100vh;
+	height: 100%;
 	float: left;
 	background-color: #ecb4b5;
 	overflow: hidden;
@@ -84,6 +84,7 @@ h1 {
 	border: 0px;
 	float: left;
 	background-color: #e1cee4;
+	cursor: pointer;
 }
 
 .box:hover {
