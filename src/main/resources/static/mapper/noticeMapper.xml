@@ -3,7 +3,14 @@
 <mapper namespace="com.qorlwn.web.dao.NoticeDAO">
 
 	<select id="list" resultType="Map">
+		select * from notice where ndel = 1
+		order by nno desc
+		limit 0, 10
+	</select>
+	
+	<select id="detail" parameterType="Integer" resultType="Map">
 		select * from notice
+		where ndel = 1 and nno = #{nno}
 	</select>
 	
 </mapper>

@@ -8,6 +8,7 @@
 	<!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <script src="./js/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 	<style type="text/css">
 		
 	</style>
@@ -35,10 +36,24 @@
 						</thead>
 						<tbody>
 						<c:forEach items="${list }" var="row">
-							<tr class="row detail">
+							<tr class="row detail" onclick="location.href='./noticeDetail?nno=${row.nno}'">
 								<td class="col-1">${row.nno }</td>
-								<td class="col-6 title">${row.ntitle }</td>
-								<td class="col-2">${row.ncontent }</td>
+								<td class="col-6 title">
+									<c:forTokens var="token" items="${row.nrealfile }" delims="." varStatus="status">
+										<c:if test="${status.last }">
+											<c:choose>
+												<c:when test="${token eq 'png' || token eq 'jpg' || token eq 'jpeg' || token eq 'bmp' || token eq 'gif' }">
+													<i class="bi bi-image"></i>
+												</c:when>
+												<c:otherwise>
+													<i class="bi bi-file-text"></i>
+												</c:otherwise>
+											</c:choose>
+										</c:if>
+									</c:forTokens>
+									${row.ntitle }
+								</td>
+								<td class="col-2">${row.m_id }</td>
 								<td class="col-2">${row.ndate }</td>
 							</tr>
 						</c:forEach>

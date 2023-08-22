@@ -18,4 +18,8 @@ public class NoticeService {
 		return noticeDAO.list();
 	}
 
+	public Map<String, Object> detail(int nno) {
+		return noticeDAO.detail(nno);
+	}
+
 }

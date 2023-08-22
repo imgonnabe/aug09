@@ -16,9 +16,9 @@
 	</select>
 	
 	<insert id="noticeWrite" parameterType="Map">
-		insert into notice (ntitle, ncontent, m_no
+		insert into notice (ntitle, ncontent, m_id
 			<if test="norifile != null and norifile != ''">, norifile, nrealfile</if>)
-		values (#{title}, #{content}, #{m_no}
+		values (#{title}, #{content}, #{m_id}
 			<if test="norifile != null and norifile != ''">, #{norifile}, #{nrealfile}</if>)
 	</insert>
 
