@@ -58,8 +58,7 @@ public class LoginController {
 	@GetMapping("/myInfo@{id}")// menu.jsp > href="./myInfo@${sessionScope.m_id }"
 	public ModelAndView myInfo(@PathVariable(value = "id", required = false) String id, HttpSession session) {// @GetMapping("/myinfo@{id}") 여기 id값을 @PathVariable("id")가 잡는다.
 		System.out.println("jsp가 보내준 값 : " + id);
-		System.out.println(id.equals(session.getAttribute("mid")));// String은 .equals
-		
+		System.out.println(id.equals(session.getAttribute("m_id")));// String은 .equals
 		Map<String, Object> myInfo = loginService.myInfo(id);
 		ModelAndView mv = new ModelAndView("myInfo");
 		// ModelAndView mv = new ModelAndView();// 객체 선언 > jsp명이 없는 상태

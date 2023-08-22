@@ -13,4 +13,9 @@
 		where ndel = 1 and nno = #{nno}
 	</select>
 	
+	<select id="getOriFileName" parameterType="String" resultType="String">
+		select norifile from notice
+		where nrealfile = #{fileName}
+	</select>
+	
 </mapper>

@@ -22,4 +22,8 @@ public class NoticeService {
 		return noticeDAO.detail(nno);
 	}
 
+	public String getOriFileName(String fileName) {
+		return noticeDAO.getOriFileName(fileName);
+	}
+
 }

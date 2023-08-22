@@ -12,4 +12,6 @@ public interface NoticeDAO {
 
 	Map<String, Object> detail(int nno);
 
+	String getOriFileName(String fileName);
+
 }

@@ -87,7 +87,7 @@
 									<img alt="" src="../upload/${detail.nrealfile }">
 								</c:when>
 								<c:otherwise>
-									<button>다운로드</button>
+									<button onclick="location.href='./download@${detail.nrealfile}'">다운로드</button>
 								</c:otherwise>
 							</c:choose>
 						</c:if>

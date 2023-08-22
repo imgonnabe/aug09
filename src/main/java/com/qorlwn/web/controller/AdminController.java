@@ -138,5 +138,10 @@ public class AdminController {
 		}
 
 	}
+	
+	@GetMapping("/mail")
+	public String mail() {
+		return "admin/mail";
+	}
 
 }
