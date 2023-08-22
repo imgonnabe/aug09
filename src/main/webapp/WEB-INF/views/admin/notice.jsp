@@ -74,7 +74,7 @@ input[type=file]::file-selector-button {
 					<td>파일유무</td>
 				</tr>
 				<c:forEach items="${notice }" var="row">
-						<tr>
+					<tr>
 						<td>${row.nno }</td>
 						<td>${row.ntitle }</td>
 						<td>${row.ndate }</td>
@@ -88,7 +88,7 @@ input[type=file]::file-selector-button {
 						<td>
 							<c:if test="${row.norifile ne null }"><i class="xi-file-check"></i></c:if>
 						</td>
-						</tr>
+					</tr>
 				</c:forEach>
 			</table>
 			<div class="notice-write-form">

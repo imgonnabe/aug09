@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.qorlwn.web.service.AdminService;
@@ -84,9 +81,7 @@ public class AdminController {
 		if (session.getAttribute("m_id") != null && util.objToInt(session.getAttribute("m_grade")) > 5) {
 			if (file.getSize() > 0) {// !file.isEmpty()
 				// 저장할 경로 뽑기
-				HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-						.currentRequestAttributes()).getRequest();
-				String path = request.getServletContext().getRealPath("/upload");
+				String path = util.uploadPath();
 				System.out.println("실제 경로 : " + path);
 				// 실제 경로 : C:\eGovFrameDev-4.1.0-64bit\workspace\aug09\src\main\webapp\ upload
 
@@ -95,13 +90,7 @@ public class AdminController {
 				System.out.println(file.getSize());// 17719
 				System.out.println(file.getContentType());// image/png
 
-				// 경로 + 저장할 파일명
-				// File filePath = new File(path);// String 타입의 경로를 file 형태로 바꾼다.
-				// File newFileName = new File(filePath + "/" + file.getOriginalFilename());//
-				// "/" == "\\"
-
-				// 중복피하기 위해 파일명+날짜+ID.파일확장자
-				// UUID+파일명.파일확장자
+				// 중복피하기 위해 날짜+UUID+파일명.파일확장자
 				// UUID 뽑기
 				UUID uuid = UUID.randomUUID();
 
@@ -110,14 +99,17 @@ public class AdminController {
 				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));// -, _ 빼야된다.
 				String realFileName = format + uuid.toString() + file.getOriginalFilename();
 
+				// 경로 + 저장할 파일명
+				// File filePath = new File(path);// String 타입의 경로를 file 형태로 바꾼다.
+				// File newFileName = new File(filePath + "/" + file.getOriginalFilename()); "/" == "\\"
 				File newFileName = new File(path, realFileName);
 
 				// 파일 업로드
 				// 1. transfer
 				// try {
-				// file.transferTo(newFileName);// 파일을 내 서버로 복사
+				// 		file.transferTo(newFileName);// 파일을 내 서버로 복사
 				// } catch (Exception e) {
-				// e.printStackTrace();
+				// 		e.printStackTrace();
 				// }
 
 				// 2. FileCopyUtils을 사용하기 위해서는 오리지널 파일을 byte[]로 만들어야 한다.
