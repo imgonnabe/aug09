@@ -21,5 +21,16 @@
 		values (#{title}, #{content}, #{m_id}
 			<if test="norifile != null and norifile != ''">, #{norifile}, #{nrealfile}</if>)
 	</insert>
+	
+	<select id="noticeDetail" parameterType="Integer" resultType="Map">
+		select ncontent
+			<if test="norifile != null and norifile != ''">, nrealfile</if>
+		from notice where nno=#{nno}
+	</select>
+	
+	<update id="noticeHideShow" parameterType="Integer">
+		update notice set ndel = if(ndel=1,0,1)
+		where nno=#{nno}
+	</update>
 
 </mapper>

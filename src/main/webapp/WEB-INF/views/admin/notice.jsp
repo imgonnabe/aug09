@@ -8,11 +8,24 @@
 <title>admin || notice</title>
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link rel="stylesheet" href="../css/admin.css">
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <style type="text/css">
 .notice-write-form {
 	margin: 10px;
 	width: 50%;
 	height: auto;
+}
+
+table {
+	width: 800px;
+	float: left;
+}
+
+.content-view {
+	width: calc(100% - 800px);
+	height: 400px;
+	background-color: #fac1b8;
+	float: right;
 }
 
 .title {
@@ -57,6 +70,51 @@ input[type=file]::file-selector-button {
     }
 }
 </style>
+<script type="text/javascript">
+	$(function(){
+		$(".ntitle").click(function(){
+			// alert($(this).siblings(".nno").text());
+			let nno = $(this).siblings(".nno").text();
+			
+			$.ajax({
+				url : './noticeDetail',
+				type : 'post',
+				data : {nno : nno},
+				dataType : 'json',
+				success : function(data){
+					// alert(data.result);
+					$(".content-ncotent").text(data.ncontent);
+				},
+				error : function(data){
+					alert('오류' + data);
+				}
+			});
+		});
+		
+		$(document).on("click",".xi-eye, .xi-eye-off", function(){// 동적
+			let nno = $(this).parent().siblings(".nno").text();
+			let nnoTD = $(this).parent();
+			// alert(nno);
+			$.ajax({
+				url : './noticeHideShow',
+				type : 'post',
+				data : {nno : nno},
+				dataType : 'json',
+				success : function(data){
+					// alert(data.result);
+					if(nnoTD.html().indexOf("-off") != -1){
+						nnoTD.html('<i class="xi-eye"></i>');
+					} else {
+						nnoTD.html('<i class="xi-eye-off"></i>');
+					}
+				},
+				error : function(data){
+					alert('오류' + data);
+				}
+			});
+		});
+	});
+</script>
 </head>
 <body>
 <div class="container">
@@ -75,8 +133,8 @@ input[type=file]::file-selector-button {
 				</tr>
 				<c:forEach items="${notice }" var="row">
 					<tr>
-						<td>${row.nno }</td>
-						<td>${row.ntitle }</td>
+						<td class="nno">${row.nno }</td>
+						<td class="ntitle">${row.ntitle }</td>
 						<td>${row.ndate }</td>
 						<td>${row.m_id }</td>
 						<td>
@@ -91,6 +149,10 @@ input[type=file]::file-selector-button {
 					</tr>
 				</c:forEach>
 			</table>
+			<div class="content-view">
+				<div class="content-ncotent"></div>
+				<div class="content-nrealfile"></div>
+			</div>
 			<div class="notice-write-form">
 				<form action="./noticeWrite" method="post" enctype="multipart/form-data">
 					<input type="text" name="title" class="title"><br>

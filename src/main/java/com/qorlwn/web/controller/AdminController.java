@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.qorlwn.web.service.AdminService;
 import com.qorlwn.web.util.Util;
 
@@ -143,5 +146,43 @@ public class AdminController {
 		util.htmlMailSender(map);
 		return "admin/mail";
 	}
-
+	
+	@ResponseBody
+	@PostMapping("/noticeDetail")
+	public String noticeDetail(@RequestParam("nno") int nno) {
+		// System.out.println(nno);
+		Map<String, String> map = adminService.noticeDetail(nno);
+		System.out.println(map);
+		
+		// jackson 사용
+		ObjectNode json = JsonNodeFactory.instance.objectNode();
+		json.put("ncontent", map.get("ncontent"));
+		json.put("nrealfile", map.get("nrealfile"));
+		// json.put("result", adminService.noticeDetail(nno));
+		
+		/*
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("bno", 123);
+		map2.put("btitle", 1234);
+		
+		ObjectMapper jsonMap = new ObjectMapper();
+		try {
+			json.put("map", jsonMap.writeValueAsString(map2));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		*/
+		return json.toString();
+	}
+	
+	@ResponseBody
+	@PostMapping("/noticeHideShow")
+	public String noticeHideShow(@RequestParam("nno") int nno) {
+		int result = adminService.noticeHideShow(nno);
+		
+		ObjectNode json = JsonNodeFactory.instance.objectNode();
+		json.put("result", result);
+		return json.toString();
+	}
+	
 }
