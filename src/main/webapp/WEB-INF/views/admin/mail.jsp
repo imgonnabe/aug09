@@ -8,7 +8,41 @@
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link rel="stylesheet" href="../css/admin.css">
 <style type="text/css">
-
+.article{
+	margin: 0 auto;
+	padding: 10px;
+	width: 800px;
+	height: 750px;
+	box-sizing: border-box;
+	background-color: #d9c5ce;	
+}
+input{
+	width: 100%;
+	height: 30px;
+	margin-bottom: 5px;
+	box-sizing: border-box;
+}
+textarea {
+	width: 100%;
+	height: 500px;
+	padding: 10px;
+	box-sizing: border-box;
+}
+button {
+	height: 40px;
+    border: none;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s;
+    background-color: #d98baf;
+    &:hover {
+    background-color: #bf567d;
+    transition: 0.7s;
+    }
+}
 </style>
 </head>
 <body>

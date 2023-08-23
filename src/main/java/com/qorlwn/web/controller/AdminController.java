@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -133,6 +134,13 @@ public class AdminController {
 	
 	@GetMapping("/mail")
 	public String mail() {
+		return "admin/mail";
+	}
+	
+	@PostMapping("/mail")
+	public String mail(@RequestParam Map<String, Object> map) throws EmailException {
+		System.out.println(map);// {title=ㅇ, to=ㅇ, content=ㅇ}
+		util.htmlMailSender(map);
 		return "admin/mail";
 	}
 
