@@ -95,6 +95,7 @@ input[type=file]::file-selector-button {
 			let nno = $(this).parent().siblings(".nno").text();
 			let nnoTD = $(this).parent();
 			// alert(nno);
+			// alert(nnoTD.html());// →→→→→→→<i class="xi-eye-off"></i> 여기서 바꾸면 <i class="xi-eye"></i>
 			$.ajax({
 				url : './noticeHideShow',
 				type : 'post',

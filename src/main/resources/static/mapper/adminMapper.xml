@@ -29,8 +29,9 @@
 	</select>
 	
 	<update id="noticeHideShow" parameterType="Integer">
-		update notice set ndel = if(ndel=1,0,1)
-		where nno=#{nno}
+		update notice set
+    	ndel = if(ndel=1,0,1)
+    	where nno=#{nno}
 	</update>
 
 </mapper>
