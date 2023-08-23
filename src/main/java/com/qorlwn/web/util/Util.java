@@ -1,9 +1,15 @@
 package com.qorlwn.web.util;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.mail.EmailAttachment;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.SimpleEmail;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -107,6 +113,52 @@ public class Util {
 	// 업로드 폴더까지 경로 얻어오기
 	public String uploadPath() {
 		return getCurrentRequest().getServletContext().getRealPath("/upload");
+	}
+	
+	public void htmlMailSender(Map<String, Object> map) throws EmailException {
+		String emailAddr = "";// 보내는 사람
+		String passwd = "";
+		String name = "스프링에서 보냄";// 보내는 사람 이름
+		String hostname = "smtp.office365.com";// smtp주소
+		int port = 587;
+		
+		// 메일 보내기
+		// SimpleEmail mail = new SimpleEmail();
+		HtmlEmail mail = new HtmlEmail();
+		mail.setCharset("utf-8");
+		mail.setDebug(true);// 디버깅을 콘솔창에 띄움
+		mail.setHostName(hostname);// 고정
+		mail.setAuthentication(emailAddr, passwd);// 고정
+		mail.setSmtpPort(port);// 고정
+		mail.setStartTLSEnabled(true);// 고정 - 이메일 암호화
+		mail.setFrom(emailAddr, name);// 고정
+		
+		mail.addTo((String) map.get("to"));// 받는 사람
+		mail.setSubject((String) map.get("title"));// 제목
+		// mail.setMsg((String) map.get("content"));// 내용
+		// 이미지 경로 잡기
+		String path = uploadPath();
+		String img = path + "/202308221130568881d856-58a5-48b5-b0e2-a06fbd83485clogo.jpg";
+		String file2 = path + "/20230822144859412d2c31-9211-47bf-bd36-ea2861d64ce4SQLD 기출문제.txt";
+		
+		String html = "<html>";
+		html += "<h1>그림을 첨부합니다.</h1>";
+		html += "<img src='" + img + "'>";
+		html += "<h2>임시 비밀번호를 보내드립니다.</h2>";
+		html += "<div>임시 암호 : 123456789";
+		html += "</div>";
+		html += "<h3>아래 링크를 클릭해서 암호를 변경해주세요.</h3>";
+		html += "<a href=\"http://nid.naver.com\">눌러주세요.</a>";
+		html += "</html>";
+		mail.setHtmlMsg(html);
+		
+		//첨부파일 보내기
+		EmailAttachment file = new EmailAttachment();
+		file.setPath(file2);
+		mail.attach(file);
+		
+		String result = mail.send();
+		System.out.println("메일 보내기 : " + result);
 	}
 
 }
