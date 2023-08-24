@@ -36,6 +36,7 @@ public class MutiBoardController {
 	@GetMapping("/mbwrite")
 	public String mbwrite(@RequestParam(value = "board", defaultValue = "1", required = false) int board, Model model,
 			HttpSession session) {
+		System.out.println("보드번호 : " + board);
 		if(session.getAttribute("m_id") != null) {
 			model.addAttribute("board", board);
 			return "mbwrite";
@@ -46,13 +47,15 @@ public class MutiBoardController {
 	
 	@PostMapping("/mbwrite")
 	public String mbwrite(@RequestParam Map<String, Object> map, HttpSession session) {
-		// System.out.println(map);
+		System.out.println(map);
 		// {title=제목, content=글씨가 작다, files=, board=1}
 		if(session.getAttribute("m_id") != null) {
 			map.put("m_id", session.getAttribute("m_id"));
 			mbService.mbWrite(map);// selectKey
-			// System.out.println(map);
+			System.out.println(map);
 			// {title=mbno는 map에, content=<p>mbno는 map에서 뽑아 써야돼욤ㅁ</p>, files=, board=1, m_id=pororo, mbno=7}
+			// <selectKey>가 없으면
+			// {title=공지, content=<p>공지</p>, files=, board=3, m_id=pororo}
 			return "redirect:/mbdetail?board=" + map.get("board") + "&mbno=" + map.get("mbno");
 		} else {
 			return "redirect:/login?error=login";

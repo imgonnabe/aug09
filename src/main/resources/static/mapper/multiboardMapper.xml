@@ -8,8 +8,12 @@
 	</select>
 	
 	<select id="list" parameterType="Integer" resultType="Map">
-		SELECT mbno, mbtitle, m_name, mbcontent, mbdate, mbread
-		FROM mbboardview where mbboard=#{board} LIMIT 0, 10
+		SELECT @rownum:=@rownum+1 AS rowNum,
+			m.mbno, m.mbtitle, m.mbdate, m.mbread, m.m_name, m.mbboard,
+			(SELECT COUNT(*) FROM mbboardview WHERE mbboard = #{board}) AS count
+		FROM mbboardview m, (SELECT @rownum:=0) AS R
+		WHERE mbboard = #{board}
+		LIMIT 0, 10
 	</select>
 	
 	<insert id="mbWrite" parameterType="Map">

@@ -67,7 +67,7 @@
 	<header class="masthead">
 		<div class="container">
 			<div id="detail">
-				<div id="detailH"><%-- ${detail.mb_no } --%>${detail.mbtitle }</div>
+				<div id="detailH">${detail.mbtitle }</div>
 				<div id="detailN_no" style="height: 0px; visibility: hidden;">${detail.mbno }</div>
 				<div id="detailIdDate">
 					<div id="detailID">${detail.m_name }</div>

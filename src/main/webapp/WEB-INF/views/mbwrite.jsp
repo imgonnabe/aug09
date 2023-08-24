@@ -25,7 +25,7 @@
 		color: black;
 	}
 	.write-form textarea {
-		wid
+		width: 100%;
 	}
 }
 </style>
