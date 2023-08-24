@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.qorlwn.web.dto.BoardDTO;
@@ -28,9 +30,10 @@ public class BoardController {
 	public String board(Model model) {
 		List<BoardDTO> list = boardService.boardList();
 		model.addAttribute("list", list);
+		System.out.println(list);
 		return "board";
 	}
-	
+	/*
 	@ResponseBody
 	@PostMapping("/detail")
 	public String detail(@RequestParam("bno") int bno) {
@@ -44,6 +47,18 @@ public class BoardController {
 		//json.put("result", e);
 		// System.out.println(json.toString());// {"result":{"content":"[sdfsdf][sdfsdf]"}}
 		return json.toString();
+	}
+	*/
+	
+	@ResponseBody
+	@PostMapping("/detail2")
+	public String detail2(@RequestParam("bno") int bno) throws JsonProcessingException {
+		BoardDTO dto = boardService.detail2(bno);
+		
+		ObjectMapper mapp = new ObjectMapper();
+		
+		String json = mapp.writeValueAsString(dto);
+		return json;
 	}
 	
 	@GetMapping("/write")

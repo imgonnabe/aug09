@@ -62,10 +62,33 @@ $(function(){
 				alert("에러");
 			}
 		});
-		
 	});
-	
 });
+	
+	function detail(bno){
+		$.ajax({
+			url : "./detail2",
+			type : "post",
+			data : {bno : bno},
+			dataType : "json",
+			success:function(data){
+				// alert(data.content);
+				$(".modal-title").text(title);
+				name += '<img src="./img/update2.png"><img src="./img/delete2.png" class="del">';
+				name += '<input type="hidden" class="bno" value="'+bno+'">';
+				name += '<input type="hidden" class="uuid" value="'+data.uuid+'">';
+				
+				$(".detail-name").html(name);
+				$(".detail-date").text(date);
+				$(".detail-read").text(data.ip + " / " + read);
+				$(".detail-content").html(data.content);
+				$("#exampleModal").modal("show");
+			},
+			error:function(error){
+				alert("에러");
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -86,8 +109,8 @@ $(function(){
 				</thead>
 				<tbody>
 				<c:forEach items="${list }" var="row">
-					<tr class="row detail">
-						<td class="col-1">${row.bno }</td>
+					<tr class="row" onclick="detail(${row.bno})">
+						<td class="col-1">${row.rowNum }</td>
 						<td class="col-6 title">${row.btitle }<c:if test="${row.commentcount ne 0 }">&nbsp;<span class="badge bg-secondary">${row.commentcount }</span></c:if></td>
 						<td class="col-2">${row.m_name }</td>
 						<td class="col-2">${row.bdate }</td>

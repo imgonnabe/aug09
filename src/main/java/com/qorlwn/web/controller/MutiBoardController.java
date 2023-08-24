@@ -29,7 +29,7 @@ public class MutiBoardController {
 		
 		List<Map<String, Object>> list = mbService.list(board);
 		model.addAttribute("list", list);
-		// System.out.println(list);
+		System.out.println(list);
 		return "multiboard";
 	}
 

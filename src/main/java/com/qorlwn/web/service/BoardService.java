@@ -26,6 +26,10 @@ public class BoardService {
 		boardDAO.readUp(bno);
 		return boardDAO.detail(bno);
 	}
+	
+	public BoardDTO detail2(int bno) {
+		return boardDAO.detail2(bno);
+	}
 
 	public int write(BoardDTO dto) {
 		// ip
@@ -34,5 +38,6 @@ public class BoardService {
 		dto.setBuuid(UUID.randomUUID().toString());
 		return boardDAO.write(dto);
 	}
+
 
 }

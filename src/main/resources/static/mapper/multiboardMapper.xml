@@ -8,13 +8,16 @@
 	</select>
 	
 	<select id="list" parameterType="Integer" resultType="Map">
-		SELECT @rownum:=@rownum+1 AS rowNum,
-			m.mbno, m.mbtitle, m.mbdate, m.mbread, m.m_name, m.mbboard,
-			(SELECT COUNT(*) FROM mbboardview WHERE mbboard = #{board}) AS count
-		FROM mbboardview m, (SELECT @rownum:=0) AS R
-		WHERE mbboard = #{board}
+		SELECT *, (SELECT COUNT(*) FROM mbboardview WHERE mbboard=#{board}) AS COUNT
+		FROM (SELECT 
+				cast(@rownum:=@rownum+1 as unsigned) AS rowNum, m.*
+				FROM mbboardview m,(SELECT @rownum:=0) AS R
+				WHERE m.mbboard = #{board}
+				ORDER BY m.mbno) mm
+		ORDER BY mm.mbno DESC
 		LIMIT 0, 10
 	</select>
+	<!-- unsigned : 부호없앤다. -->
 	
 	<insert id="mbWrite" parameterType="Map">
 	
