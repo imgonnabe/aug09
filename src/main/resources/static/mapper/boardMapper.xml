@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="detail2" parameterType="Integer" resultType="BoardDTO">
-		select bcontent, buuid, bip from boardview where bno=#{bno}
+		select * from boardview where bno=#{bno}
 	</select>
 	
 	<insert id="write" parameterType="BoardDTO">

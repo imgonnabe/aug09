@@ -56,7 +56,6 @@ public class BoardController {
 		BoardDTO dto = boardService.detail2(bno);
 		
 		ObjectMapper mapp = new ObjectMapper();
-		
 		String json = mapp.writeValueAsString(dto);
 		return json;
 	}

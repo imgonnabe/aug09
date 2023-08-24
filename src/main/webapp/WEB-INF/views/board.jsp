@@ -66,22 +66,23 @@ $(function(){
 });
 	
 	function detail(bno){
+		let name = "";
 		$.ajax({
 			url : "./detail2",
 			type : "post",
 			data : {bno : bno},
 			dataType : "json",
 			success:function(data){
-				// alert(data.content);
-				$(".modal-title").text(title);
-				name += '<img src="./img/update2.png"><img src="./img/delete2.png" class="del">';
-				name += '<input type="hidden" class="bno" value="'+bno+'">';
-				name += '<input type="hidden" class="uuid" value="'+data.uuid+'">';
+				// alert(data);
+				$(".modal-title").text(data.btitle);
+				name += data.m_name + '<img src="./img/update2.png"><img src="./img/delete2.png" class="del">';
+				name += '<input type="hidden" class="bno" value="'+data.bno+'">';
+				name += '<input type="hidden" class="uuid" value="'+data.buuid+'">';
 				
 				$(".detail-name").html(name);
-				$(".detail-date").text(date);
-				$(".detail-read").text(data.ip + " / " + read);
-				$(".detail-content").html(data.content);
+				$(".detail-date").text(data.bdate);
+				$(".detail-read").text(data.bip + " / " + data.blike);
+				$(".detail-content").html(data.bcontent);
 				$("#exampleModal").modal("show");
 			},
 			error:function(error){
