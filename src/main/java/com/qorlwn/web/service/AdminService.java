@@ -33,4 +33,8 @@ public class AdminService {
 		return adminDAO.noticeHideShow(nno);
 	}
 
+	public List<Map<String, Object>> setupboard() {
+		return adminDAO.setupboard();
+	}
+
 }

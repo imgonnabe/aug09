@@ -33,5 +33,10 @@
     	ndel = if(ndel=1,0,1)
     	where nno=#{nno}
 	</update>
+	
+	<select id="setupboard" resultType="Map">
+		select b_no, mb_cate, b_catename, b_url, b_comment
+		from setupboard
+	</select>
 
 </mapper>

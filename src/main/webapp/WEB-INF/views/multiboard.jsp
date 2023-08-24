@@ -15,6 +15,32 @@ $(function(){
 	
 });
 </script>
+<style type="text/css">
+.container {
+	text-align: center;
+}
+
+.boardlist {
+	display: inline-block;
+}
+
+.rowbtn {
+	height: 40px;
+    border: none;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s;
+    background-color: #d9b0c3;
+    float: left;
+    &:hover {
+    background-color: #d98baf;
+    transition: 0.7s;
+    }
+}
+</style>
 </head>
 <body>
 	<%@ include file="menu.jsp" %>
@@ -22,6 +48,11 @@ $(function(){
 	<header class="masthead">
 		<div class="container">
 			<h1>multiboard</h1>
+			<c:forEach items="${boardlist }" var="row">
+				<div class="boardlist">
+					<button class="rowbtn" onclick="location.href='${row.b_url }'">${row.b_catename }</button>
+				</div>
+			</c:forEach>
 			<c:choose>
 				<c:when test="${fn:length(list) gt 0 }">
 					<table class="table table-dark table-hover table-striped">
@@ -36,7 +67,7 @@ $(function(){
 						</thead>
 						<tbody>
 						<c:forEach items="${list }" var="row">
-							<tr class="row detail" onclick="location.href='./mbdetail?mbno=${row.mbno }'">
+							<tr class="row detail" onclick="location.href='./mbdetail?board=${param.board}&mbno=${row.mbno }'">
 								<td class="col-1">${row.mbno }</td>
 								<td class="col-6 title">${row.mbtitle }<c:if test="${row.commentcount ne 0 }">&nbsp;<span class="badge bg-secondary">${row.commentcount }</span></c:if></td>
 								<td class="col-2">${row.m_name }</td>
@@ -48,7 +79,7 @@ $(function(){
 					</table>
 				</c:when>
 				<c:otherwise>
-					<h1>게시판에 글이 없습니다.</h1>
+					<h1 style="display: block;">게시판에 글이 없습니다.</h1>
 				</c:otherwise>
 			</c:choose>
 			<c:if test="${sessionScope.m_id ne null }">

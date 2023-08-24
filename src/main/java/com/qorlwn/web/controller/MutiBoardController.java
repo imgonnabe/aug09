@@ -23,6 +23,10 @@ public class MutiBoardController {
 	@GetMapping("/multiboard") // multiboard?board=1
 	public String multiboard(@RequestParam(value = "board", defaultValue = "1", required = false) int board,
 			Model model) {
+		// 화면에 보여줄 게시판 목록 만들기
+		List<Map<String, Object>> boardlist = mbService.boardlist();
+		model.addAttribute("boardlist", boardlist);
+		
 		List<Map<String, Object>> list = mbService.list(board);
 		model.addAttribute("list", list);
 		// System.out.println(list);
@@ -49,7 +53,7 @@ public class MutiBoardController {
 			mbService.mbWrite(map);// selectKey
 			// System.out.println(map);
 			// {title=mbno는 map에, content=<p>mbno는 map에서 뽑아 써야돼욤ㅁ</p>, files=, board=1, m_id=pororo, mbno=7}
-			return "redirect:/mbdetail?mbno=" + map.get("mbno");
+			return "redirect:/mbdetail?board=" + map.get("board") + "&mbno=" + map.get("mbno");
 		} else {
 			return "redirect:/login?error=login";
 		}

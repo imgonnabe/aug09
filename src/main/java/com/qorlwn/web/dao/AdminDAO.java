@@ -18,4 +18,6 @@ public interface AdminDAO {
 
 	int noticeHideShow(int nno);
 
+	List<Map<String, Object>> setupboard();
+
 }

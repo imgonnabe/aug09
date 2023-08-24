@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qorlwn.web.dao.MultiBoardDAO">
 	
+	<select id="boardlist" resultType="Map">
+		select * from setupboard
+		order by b_no
+	</select>
+	
 	<select id="list" parameterType="Integer" resultType="Map">
 		SELECT mbno, mbtitle, m_name, mbcontent, mbdate, mbread
 		FROM mbboardview where mbboard=#{board} LIMIT 0, 10
