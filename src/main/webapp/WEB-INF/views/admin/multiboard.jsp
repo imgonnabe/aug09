@@ -68,6 +68,14 @@
 						</c:forEach>
 					</div>
 				</div>
+				<div class="" style="margin: 10px">
+					<form action="./multiboard" method="post">
+						<input type="number" name="cateNum" required="required" placeholder="게시판 번호 입력">
+						<input type="text" name="name" required="required" placeholder="게시판 이름 입력">
+						<input type="text" name="comment" required="required" placeholder="참고">
+						<button type="submit" class="btn">저장</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

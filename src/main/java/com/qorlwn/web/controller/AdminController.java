@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -191,6 +192,28 @@ public class AdminController {
 		List<Map<String, Object>> list = adminService.setupboard();
 		model.addAttribute("list", list);
 		return "admin/multiboard";
+	}
+	
+	@PostMapping("/multiboard")
+	public String multiboard(@RequestParam Map<String, Object> map) {
+		System.out.println(map);
+		adminService.multiboard(map);
+		return "redirect:/admin/multiboard";
+	}
+	
+	@GetMapping("/member")
+	public ModelAndView member() {
+		ModelAndView mv = new ModelAndView("admin/member");
+		List<Map<String, Object>> list = adminService.memberList();
+		mv.addObject("list", list);
+		return mv;
+	}
+	
+	@GetMapping("/gradeChange")
+	public String gradeChange(@RequestParam Map<String, Object> map) {
+		System.out.println(map);// {m_no=10, grade=9}
+		adminService.gradeChange(map);
+		return "redirect:/admin/member";
 	}
 	
 }

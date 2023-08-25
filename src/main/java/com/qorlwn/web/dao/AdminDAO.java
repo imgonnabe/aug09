@@ -20,4 +20,10 @@ public interface AdminDAO {
 
 	List<Map<String, Object>> setupboard();
 
+	void multiboard(Map<String, Object> map);
+
+	List<Map<String, Object>> memberList();
+
+	void gradeChange(Map<String, Object> map);
+
 }

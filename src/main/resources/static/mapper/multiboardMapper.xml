@@ -9,13 +9,10 @@
 	
 	<select id="list" parameterType="Integer" resultType="Map">
 		SELECT *, (SELECT COUNT(*) FROM mbboardview WHERE mbboard=#{board}) AS COUNT
-		FROM (SELECT 
-				cast(@rownum:=@rownum+1 as unsigned) AS rowNum, m.*
-				FROM mbboardview m,(SELECT @rownum:=0) AS R
+		FROM (SELECT cast(@rownum:=@rownum+1 as unsigned) AS rowNum, m.* FROM mbboardview m,(SELECT @rownum:=0) AS R
 				WHERE m.mbboard = #{board}
 				ORDER BY m.mbno) mm
-		ORDER BY mm.mbno DESC
-		LIMIT 0, 10
+		ORDER BY mm.mbno DESC LIMIT 0, 10
 	</select>
 	<!-- unsigned : 부호없앤다. -->
 	
@@ -34,5 +31,5 @@
 		select mbno, mbtitle, m_name, mbcontent, mbdate, mbread
 		from mbboardview where mbno=#{mbno}
 	</select>
-
+	
 </mapper>

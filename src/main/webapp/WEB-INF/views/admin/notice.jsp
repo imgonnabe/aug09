@@ -24,7 +24,6 @@ table {
 .content-view {
 	width: calc(100% - 800px);
 	height: 400px;
-	background-color: #fac1b8;
 	float: right;
 }
 
@@ -84,6 +83,10 @@ input[type=file]::file-selector-button {
 				success : function(data){
 					// alert(data.result);
 					$(".content-ncotent").text(data.ncontent);
+					$(".content-ncotent").css('background-color','#fac1b8');
+					$(".content-ncotent").css('display','inline-block');
+					$(".content-ncotent").css('font-size','larger');
+					$(".content-ncotent").css('font-weight','bolder');
 				},
 				error : function(data){
 					alert('오류' + data);

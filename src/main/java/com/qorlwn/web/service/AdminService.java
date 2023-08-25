@@ -37,4 +37,16 @@ public class AdminService {
 		return adminDAO.setupboard();
 	}
 
+	public void multiboard(Map<String, Object> map) {
+		adminDAO.multiboard(map);
+	}
+
+	public List<Map<String, Object>> memberList() {
+		return adminDAO.memberList();
+	}
+
+	public void gradeChange(Map<String, Object> map) {
+		adminDAO.gradeChange(map);
+	}
+
 }

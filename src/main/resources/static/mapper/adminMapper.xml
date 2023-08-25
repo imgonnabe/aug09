@@ -38,5 +38,20 @@
 		select b_no, mb_cate, b_catename, b_url, b_comment
 		from setupboard
 	</select>
+	
+	<insert id="multiboard" parameterType="Map">
+		insert into setupboard (mb_cate, b_catename, b_url, b_comment)
+		values (#{cateNum}, #{name}, concat('./multiboard?board=', #{cateNum}), #{comment})
+	</insert>
+	
+	<select id="memberList" resultType="Map">
+		select * from members
+	</select>
+	
+	<update id="gradeChange" parameterType="Map">
+		update members set
+		m_grade = #{grade}
+		where m_no = #{m_no}
+	</update>
 
 </mapper>
