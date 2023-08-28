@@ -234,4 +234,15 @@ public class AdminController {
 		model.addAttribute("list", list);
 		return "/admin/post";
 	}
+	
+	@ResponseBody
+	@PostMapping("/mbcontent")
+	public String mbcontent(@RequestParam("mbno") int mbno) {
+		// System.out.println(mbno);
+		Map<String, String> map = adminService.mbcontent(mbno);
+		// System.out.println(map);// {mbcontent=<p>떡꼬치~~</p>}
+		ObjectNode json = JsonNodeFactory.instance.objectNode();
+		json.put("mbcontent", map.get("mbcontent"));
+		return json.toString();
+	}
 }

@@ -28,4 +28,6 @@ public interface AdminDAO {
 
 	List<Map<String, Object>> post(Map<String, Object> map);
 
+	Map<String, String> mbcontent(int mbno);
+
 }

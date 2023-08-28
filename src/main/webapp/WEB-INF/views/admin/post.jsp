@@ -8,6 +8,7 @@
 <title>admin || post</title>
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link rel="stylesheet" href="../css/admin.css">
+<script src="../js/jquery-3.7.0.min.js"></script>
 <style type="text/css">
 .table {
 	display: table;
@@ -57,6 +58,28 @@
     }
 }
 </style>
+<script type="text/javascript">
+$(function(){
+	$('.mbtitle').click(function(){
+		let mbno = $(this).siblings('.mbno').text();
+		// alert(mbno);
+		let div = $(this).parent().next();
+		
+		$.ajax({
+			url: './mbcontent',
+			type: 'post',
+			data: {mbno:mbno},
+			dataType:'json',
+			success:function(data){
+				div.html('<div class="mbcontentDiv">' + data.mbcontent + '</div>');
+			},
+			error:function(error){
+				alert('에러');
+			}
+		});
+	});
+});
+</script>
 </head>
 <body>
 <div class="container">
@@ -98,14 +121,15 @@
 				<div class="body">
 					<c:forEach items="${list }" var="row">
 						<div class="row <c:if test="${row.mbdel eq 0}">gray</c:if>"  >
-							<div class="cell">${row.mbno }</div>
+							<div class="cell mbno">${row.mbno }</div>
 							<div class="cell">${row.b_catename }</div>
-							<div class="cell">${row.mbtitle }</div>
+							<div class="cell mbtitle">${row.mbtitle }</div>
 							<div class="cell">${row.m_name }(${row.m_id })</div>
 							<div class="cell">${row.mbdate}</div>
 							<div class="cell">${row.mbread }</div>
 							<div class="cell">${row.mbdel}</div>
 						</div>
+						<div class="mbcontent row"></div>
 					</c:forEach>
 				</div>
 			</div>

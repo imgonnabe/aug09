@@ -53,4 +53,8 @@ public class AdminService {
 		return adminDAO.post(map);
 	}
 
+	public Map<String, String> mbcontent(int mbno) {
+		return adminDAO.mbcontent(mbno);
+	}
+
 }

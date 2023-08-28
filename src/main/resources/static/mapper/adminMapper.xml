@@ -55,7 +55,7 @@
 	</update>
 	
 	<select id="post" parameterType="Map" resultType="Map">
-		select m.m_id, mb.mbtitle, mb.mbcontent, mb.mbdate, mb.mbread, mb.mbdel, m.m_name, sb.b_catename,
+		select m.m_id, mb.mbno, mb.mbtitle, mb.mbcontent, mb.mbdate, mb.mbread, mb.mbdel, m.m_name, sb.b_catename,
 		(select count(*) from
 		multiboard mb left join members m on mb.m_no = m.m_no
 		<where>
@@ -81,5 +81,10 @@
 		</where>
 		order by mb.mbno desc
 	</select>
-
+	
+	<select id="mbcontent" parameterType="Integer" resultType="Map">
+		select mbcontent from multiboard
+		where mbno=#{mbno}
+	</select>
+	
 </mapper>
