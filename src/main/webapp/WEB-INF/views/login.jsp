@@ -106,14 +106,14 @@
 					location.href="/";
 				},
 				error:function(error){
-					alert('에러');
+					alert('다시 시도하세요.');
 				}
 			});
 		});
 	});
 	
 	// setCookie()
-	function setCookie(cookieName, value, exdays){
+	function setCookie(cookieName, value, exdays){// setCookie('userID', id, 7)
 		let exdate = new Date();
 		exdate.setDate(exdate.getDate() + exdays);
 		let cookieValue = value + (((exdays == null) ? "" : "; expires=" + exdate.toGMTString()));
@@ -129,7 +129,7 @@
 	}
 	
 	// getCookie()
-	function getCookie(cookieName){//userID=aaaa;expires=2023-08-25
+	function getCookie(cookieName){//getCookie('userID') userID=aaaa;expires=2023-08-25
 		let x, y;
 		let val = document.cookie.split(";");//[userID=aaaa, expires=2023-08-25]
 		for(let i = 0; i < val.length; i++){

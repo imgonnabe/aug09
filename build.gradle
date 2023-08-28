@@ -39,7 +39,7 @@ dependencies {
 	// implementation 'org.json:json:20230227'
 	// https://mvnrepository.com/artifact/org.json/json
 	// log
-    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+    // implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
     // 이메일 보내기
     implementation 'org.apache.commons:commons-email:1.5'
 }

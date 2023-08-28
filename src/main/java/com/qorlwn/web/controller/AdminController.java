@@ -216,4 +216,22 @@ public class AdminController {
 		return "redirect:/admin/member";
 	}
 	
+	@GetMapping("/post")
+	public String post(Model model, @RequestParam(name="cate", required = false, defaultValue = "0") int cate,
+			@RequestParam Map<String, Object> map) {
+		// 게시판 번호가 들어온다.
+		// 게시판 관리번호를 다 불러온다.
+		if(!map.containsKey("cate") || map.get("cate").equals(null) || map.get("cate").equals("")) {
+			map.put("cate", 0);
+		}
+		System.out.println(cate);// 1
+		System.out.println(map);// {searchV=ㅇ, cate=1}
+		
+		List<Map<String, Object>> boardlist = adminService.setupboard();
+		model.addAttribute("boardlist", boardlist);
+		// 게시글을 다 불러온다.
+		List<Map<String, Object>> list = adminService.post(map);
+		model.addAttribute("list", list);
+		return "/admin/post";
+	}
 }

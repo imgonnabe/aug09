@@ -34,14 +34,15 @@ public class LoginController {
 	
 	@ResponseBody
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> map, HttpSession session) throws JsonProcessingException {
+	public String login(@RequestParam Map<String, String> map, HttpSession session) throws JsonProcessingException{
+		// System.out.println(map);
 		Map<String, Object> result = loginService.login(map);
 		// System.out.println(result);// {m_name=뽀로로, count=1}
 		// String.valueOf(result.get("count")).equlas("1")
 		if (util.objToInt(result.get("count")) == 1) {
 			session.setAttribute("m_name", result.get("m_name"));
 			session.setAttribute("m_id", map.get("id"));
-			// System.out.println(map.get("id"));// result.get("id") = null
+			System.out.println(map.get("id"));// result.get("id") = null
 			ObjectMapper mapp = new ObjectMapper();
 			String json = mapp.writeValueAsString(result);
 			return json;

@@ -26,4 +26,6 @@ public interface AdminDAO {
 
 	void gradeChange(Map<String, Object> map);
 
+	List<Map<String, Object>> post(Map<String, Object> map);
+
 }

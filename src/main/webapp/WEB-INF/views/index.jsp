@@ -8,7 +8,7 @@
         <meta name="author" content="" /><!-- 소유자 -->
         <title>연습</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="./assets/favicon.ico"><!-- jsp 제외한건 static폴더로 -->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico"><!-- jsp 제외한건 static폴더로 -->
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->

@@ -3,7 +3,7 @@
 <div class="menu">
 	<div style="height: 50px;"></div>
 		<div class="menu-item" onclick="url('multiboard')"><i class="xi-forum xi-2x xi-fw"></i>게시판 관리</div>
-		<div class="menu-item" onclick="url('post')"><i class="xi-library-books xi-2x xi-fw"></i>게시물 관리</div>
+		<div class="menu-item" onclick="url('post?cate=0')"><i class="xi-library-books xi-2x xi-fw"></i>게시물 관리</div>
 		<div class="menu-item" onclick="url('member')"><i class="xi-user xi-2x xi-fw"></i>회원 관리</div>
 		<div class="menu-item" onclick="url('comment')"><i class="xi-comment xi-2x xi-fw"></i>댓글 관리</div>
 		<div class="menu-item" onclick="url('mail')"><i class="xi-mail xi-2x xi-fw"></i>메일 보내기</div>

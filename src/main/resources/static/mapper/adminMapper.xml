@@ -53,5 +53,33 @@
 		m_grade = #{grade}
 		where m_no = #{m_no}
 	</update>
+	
+	<select id="post" parameterType="Map" resultType="Map">
+		select m.m_id, mb.mbtitle, mb.mbcontent, mb.mbdate, mb.mbread, mb.mbdel, m.m_name, sb.b_catename,
+		(select count(*) from
+		multiboard mb left join members m on mb.m_no = m.m_no
+		<where>
+			<if test="cate gt 0">and mb.mbboard = #{cate}</if>
+			<choose>
+				<when test="searchN == 'title'">and mb.mbtitle like concat('%', #{searchV},'%')</when>
+				<when test="searchN == 'content'">and mb.mbcontent like concat('%', #{searchV},'%')</when>
+				<when test="searchN == 'nick'">and m.m_name like concat('%', #{searchV},'%')</when>
+				<when test="searchN == 'id'">and m.m_id like concat('%', #{searchV},'%')</when>
+			</choose>
+		</where>
+		) as count 
+		from multiboard mb, members m, setupboard sb
+		<where>
+		mb.m_no = m.m_no and mb.mbboard = sb.mb_cate
+			<if test="cate gt 0">and mb.mbboard = #{cate}</if>
+			<choose>
+				<when test="searchN == 'title'">and mb.mbtitle like concat('%', #{searchV},'%')</when>
+				<when test="searchN == 'content'">and mb.mbcontent like concat('%', #{searchV},'%')</when>
+				<when test="searchN == 'nick'">and m.m_name like concat('%', #{searchV},'%')</when>
+				<when test="searchN == 'id'">and m.m_id like concat('%', #{searchV},'%')</when>
+			</choose>
+		</where>
+		order by mb.mbno desc
+	</select>
 
 </mapper>
