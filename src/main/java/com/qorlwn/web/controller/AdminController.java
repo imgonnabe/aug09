@@ -1,14 +1,25 @@
 package com.qorlwn.web.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +34,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.qorlwn.web.service.AdminService;
@@ -245,4 +264,122 @@ public class AdminController {
 		json.put("mbcontent", map.get("mbcontent"));
 		return json.toString();
 	}
+	
+	@GetMapping("/corona")
+	public String corona(Model model) throws IOException {// StrinbBuilder는 mutable
+		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1790387/covid19CurrentStatusKorea/covid19CurrentStatusKoreaJason"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=2FuvLNkoDGgjuFFIzsjapUacw5R9vxrUeOO20QOMPwYcIzxjFKkrRqICURsIaIrOikg7mbtiTUMicRDeWonPDw%3D%3D"); /*Service Key*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {// 통신 안됐을 때
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        // System.out.println(sb.toString());
+        model.addAttribute("corona", sb.toString());
+        // String > json
+        ObjectMapper mapper = new ObjectMapper();
+        // json > jackson jsonNode : json문서의 전체 혹은 일부를 나타낼 수 있는 객체
+        JsonNode jsonN = mapper.readTree(sb.toString());// tree형태로
+        System.out.println(jsonN.get("response").get("result").get(0));
+        
+        // java object > json : mapper.writeValue();
+        // json > map(java object)
+        Map<String, Object> result = mapper.readValue(
+        		(jsonN.get("response").get("result").get(0)).toString(), new TypeReference<Map<String, Object>>(){
+        		});
+        model.addAttribute("result", result);
+		return "/admin/corona";
+	}
+	
+	@GetMapping("/air2")
+	public String air() throws IOException, ParserConfigurationException, SAXException {
+		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnStatsSvc/getMsrstnAcctoRDyrg"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=2FuvLNkoDGgjuFFIzsjapUacw5R9vxrUeOO20QOMPwYcIzxjFKkrRqICURsIaIrOikg7mbtiTUMicRDeWonPDw%3D%3D"); /*Service Key*/
+        urlBuilder.append("&returnType=xml"); /*xml 또는 json*/
+        urlBuilder.append("&numOfRows=100"); /*한 페이지 결과 수*/
+        urlBuilder.append("&pageNo=1"); /*페이지번호*/
+        urlBuilder.append("&inqBginDt=20230801"); /*조회시작일자*/
+        urlBuilder.append("&inqEndDt=20230829"); /*조회종료일자*/
+        urlBuilder.append("&msrstnName=" + URLEncoder.encode("강남구", "UTF-8")); /*측정소명*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        System.out.println(sb.toString());
+        
+        // String > xml
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        // Document DOM parser가 입력받은 파일을 파싱하도록 요청
+        Document document = builder.parse(new InputSource(new StringReader(sb.toString())));
+        
+        document.getDocumentElement().normalize();
+        System.out.println(document);
+		return "/admin/air";
+	}
+	
+	@GetMapping("/air")
+	   public String air(Model model) throws Exception {
+	      // String to xml
+	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	      DocumentBuilder builder = factory.newDocumentBuilder();
+	      Document document = builder.parse("c:\\temp\\air.xml");
+
+	      //document.getDocumentElement().normalize();
+	      System.out.println(document.getDocumentElement().getNodeName());// xml의 최상위 tag값을 가져온다.
+	      
+	      NodeList list = document.getElementsByTagName("item");// 파싱할 태그 > 배열화, list.getLength() : 파싱할 리스트 수
+	         //System.out.println("item length = " + list.getLength());
+	         //System.out.println(list.toString());
+	         ArrayList<Map<String, Object>> airList = new ArrayList<Map<String,Object>>();
+	         for (int i = list.getLength() - 1; i >= 0; i--) {
+	            NodeList childList = list.item(i).getChildNodes();
+	            
+	            Map<String, Object> value = new HashMap<String, Object>();
+	            for (int j = 0; j < childList.getLength(); j++) {
+	               Node node = childList.item(j);
+	               if (node.getNodeType() == Node.ELEMENT_NODE) {
+	            	  // Node는 공백, 주석, 태그, 텍스트 등 모든 속성을 포함
+	            	  // Node.ELEMENT_NODE -> html에서 사용하는 HTMLElement
+	            	  // Node.TEXT_NODE -> 일반 텍스트 요소
+	            	  // Node.COMMENT_NODE -> 주석
+	                  //System.out.println(node.getNodeName());
+	                  //System.out.println(node.getTextContent());
+	                  value.put(node.getNodeName(), node.getTextContent());
+	               }
+	            }
+	            airList.add(value);
+	         }
+	         System.out.println("xml : " + airList);
+	         model.addAttribute("list", airList);
+
+	      return "/admin/air";
+	   }
 }

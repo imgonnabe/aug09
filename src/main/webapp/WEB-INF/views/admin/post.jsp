@@ -10,32 +10,28 @@
 <link rel="stylesheet" href="../css/admin.css">
 <script src="../js/jquery-3.7.0.min.js"></script>
 <style type="text/css">
-.table {
-	display: table;
+table {
+	margin: 20px;
 	border: 3px solid black;
-	width: 800px;
+	width: 900px;
 	border-collapse: collapse;
 }
 
-.heading {
-	display: table-header-group;
-	background-color: #d9c5ce;
-	font-weight: bold;
-}
-
-.body {
-	display: table-row-group;
-}
-
-.row {
-	display: table-row;
-	border: 1px solid black;
-}
-
-.head, .cell {
-	display: table-cell;
-	padding: 3px;
+tr {
+	border-bottom: 1px solid black;
 	text-align: center;
+}
+
+th {
+	font-size: large;
+	font-weight: bolder;
+	border-bottom: 2px solid black;
+	border-collapse: collapse;
+	background-color: #f2808a;
+}
+
+.mbtitle:hover {
+	cursor: pointer;
 }
 
 .gray{
@@ -57,13 +53,21 @@
     transition: 0.7s;
     }
 }
+
+/* .mbcontentDiv{
+   clear:both;float 속성 취소
+   width: 800px;
+   height: auto;
+   background-color: #f2808a;
+} */
 </style>
 <script type="text/javascript">
 $(function(){
 	$('.mbtitle').click(function(){
 		let mbno = $(this).siblings('.mbno').text();
 		// alert(mbno);
-		let div = $(this).parent().next();
+		let td = $(this).parent().next();
+		// let parent = $(this).parent();
 		
 		$.ajax({
 			url: './mbcontent',
@@ -71,7 +75,9 @@ $(function(){
 			data: {mbno:mbno},
 			dataType:'json',
 			success:function(data){
-				div.html('<div class="mbcontentDiv">' + data.mbcontent + '</div>');
+				td.html('<td colspan="7" class="mbcontentDiv">' + data.mbcontent + '</td>');
+				// let div = "<div class='row'><div class='div-cell div_content'></div></div>";
+			    // parent.after(div);
 			},
 			error:function(error){
 				alert('에러');
@@ -106,33 +112,33 @@ $(function(){
 					</form>
 				</div>
 			</div>
-			<div class="table">
-				<div class="heading">
-					<div class="row">
-						<div class="head">번호</div>
-						<div class="head">카테고리</div>
-						<div class="head">제목</div>
-						<div class="head">글쓴이</div>
-						<div class="head">날짜</div>
-						<div class="head">조회수</div>
-						<div class="head">삭제여부</div>
-					</div>
-				</div>
-				<div class="body">
+			<table>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>글쓴이</th>
+						<th>날짜</th>
+						<th>조회수</th>
+						<th>삭제여부</th>
+					</tr>
+				</thead>
+				<tbody>
 					<c:forEach items="${list }" var="row">
-						<div class="row <c:if test="${row.mbdel eq 0}">gray</c:if>"  >
-							<div class="cell mbno">${row.mbno }</div>
-							<div class="cell">${row.b_catename }</div>
-							<div class="cell mbtitle">${row.mbtitle }</div>
-							<div class="cell">${row.m_name }(${row.m_id })</div>
-							<div class="cell">${row.mbdate}</div>
-							<div class="cell">${row.mbread }</div>
-							<div class="cell">${row.mbdel}</div>
-						</div>
-						<div class="mbcontent row"></div>
+						<tr class="row <c:if test="${row.mbdel eq 0}">gray</c:if>"  >
+							<td class="mbno">${row.mbno }</td>
+							<td>${row.b_catename }</td>
+							<td class="mbtitle">${row.mbtitle }</td>
+							<td>${row.m_name }(${row.m_id })</td>
+							<td>${row.mbdate}</td>
+							<td>${row.mbread }</td>
+							<td>${row.mbdel}</td>
+						</tr>
+						<tr></tr>
 					</c:forEach>
-				</div>
-			</div>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
