@@ -345,13 +345,13 @@ public class AdminController {
 		return "/admin/air";
 	}
 	
-	@GetMapping("/air")
-	   public String air(Model model) throws Exception {
+	  @GetMapping("/air")
+	  public String air(Model model) throws Exception {
 	      // String to xml
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      DocumentBuilder builder = factory.newDocumentBuilder();
 	      Document document = builder.parse("c:\\temp\\air.xml");
-
+	
 	      //document.getDocumentElement().normalize();
 	      System.out.println(document.getDocumentElement().getNodeName());// xml의 최상위 tag값을 가져온다.
 	      
@@ -379,7 +379,7 @@ public class AdminController {
 	         }
 	         System.out.println("xml : " + airList);
 	         model.addAttribute("list", airList);
-
+	
 	      return "/admin/air";
 	   }
 }
