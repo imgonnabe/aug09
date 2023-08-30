@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.SimpleEmail;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -116,8 +115,8 @@ public class Util {
 	}
 	
 	public void htmlMailSender(Map<String, Object> map) throws EmailException {
-		String emailAddr = "";// 보내는 사람
-		String passwd = "";
+		String emailAddr = "qorlwn456123@outlook.kr";// 보내는 사람
+		String passwd = "QORl784512!";
 		String name = "스프링에서 보냄";// 보내는 사람 이름
 		String hostname = "smtp.office365.com";// smtp주소
 		int port = 587;
@@ -138,12 +137,12 @@ public class Util {
 		// mail.setMsg((String) map.get("content"));// 내용
 		// 이미지 경로 잡기
 		String path = uploadPath();
-		String img = path + "/202308221130568881d856-58a5-48b5-b0e2-a06fbd83485clogo.jpg";
+		String img = "https://whale.naver.com/img//banner_beta_download_phone_1440.png";
 		String file2 = path + "/20230822144859412d2c31-9211-47bf-bd36-ea2861d64ce4SQLD 기출문제.txt";
 		
 		String html = "<html>";
 		html += "<h1>그림을 첨부합니다.</h1>";
-		html += "<img src='" + img + "'>";
+		html += "<img alt=\"이미지\" src=\"" + img + "\">";
 		html += "<h2>임시 비밀번호를 보내드립니다.</h2>";
 		html += "<div>임시 암호 : 123456789";
 		html += "</div>";
@@ -159,6 +158,7 @@ public class Util {
 		
 		String result = mail.send();
 		System.out.println("메일 보내기 : " + result);
+		// 메일 보내기 : <1695818048.79.1692756794254@DESKTOP-ERR5D88>
 	}
 
 }
