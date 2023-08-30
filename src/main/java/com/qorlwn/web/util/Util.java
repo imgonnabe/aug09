@@ -115,8 +115,8 @@ public class Util {
 	}
 	
 	public void htmlMailSender(Map<String, Object> map) throws EmailException {
-		String emailAddr = "qorlwn456123@outlook.kr";// 보내는 사람
-		String passwd = "QORl784512!";
+		String emailAddr = "";// 보내는 사람
+		String passwd = "";
 		String name = "스프링에서 보냄";// 보내는 사람 이름
 		String hostname = "smtp.office365.com";// smtp주소
 		int port = 587;
